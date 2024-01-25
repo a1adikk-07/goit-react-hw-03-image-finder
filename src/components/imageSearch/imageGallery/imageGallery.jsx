@@ -1,8 +1,8 @@
 import ImageGalleryItem from '../imageGalleryItem/imageGalleryItem';
 import styles from './imageGallery.module.css';
 
-const ImageGallery = ({ item, showModal }) => {
-  const elements = item.map(({ id, webformatURL, tags }) => (
+const ImageGallery = ({ showModal, items }) => {
+  const elements = items.map(({ id, webformatURL, tags }) => (
     <ImageGalleryItem
       key={id}
       showModal={showModal}

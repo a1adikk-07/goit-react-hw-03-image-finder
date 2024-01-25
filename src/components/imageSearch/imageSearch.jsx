@@ -18,13 +18,15 @@ class ImageSearch extends Component {
     modalOpen: false,
     postDetails: {},
   };
+
   async componentDidUpdate(prevProps, prevState) {
     const { search, page } = this.state;
     if (search && (search !== prevState.search || page !== prevState.page)) {
-      this.fetchProps();
+      this.fetchPosts();
     }
   }
-  async fetchProps() {
+
+  async fetchPosts() {
     const { search, page } = this.state;
     try {
       this.setState({ loading: true });
@@ -35,37 +37,42 @@ class ImageSearch extends Component {
       this.setState(() => ({
         totalHits: data.totalHits ? data.totalHits : 0,
       }));
-      TouchList.setState({ error: null });
+      this.setState({ error: null });
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
     }
   }
+
   handleSearch = ({ search }) => {
     this.setState({ search, totalHits: 0, hits: [], page: 1 });
   };
+
   loadMore = () => {
     this.setState(({ page }) => ({ page: page + 1 }));
   };
-  showModal = ({ webFormatURL, tags }) => {
+
+  showModal = ({ webformatURL, tags }) => {
     this.setState({
       modalOpen: true,
       postDetails: {
-        webFormatURL,
+        webformatURL,
         tags,
       },
     });
   };
+
   closeModal = () => {
     this.setState({
       modalOpen: false,
       postDetails: {},
     });
   };
+
   render() {
     const { handleSearch, loadMore, showModal, closeModal } = this;
-    const { hits, totalHits, loading, error, modalOpen, postDetails } =
+    const { totalHits, hits, loading, error, modalOpen, postDetails } =
       this.state;
 
     const isImages = Boolean(hits.length);
@@ -76,7 +83,7 @@ class ImageSearch extends Component {
         <Searchbar onSubmit={handleSearch} />
         {error && <p className={styles.error}>ERROR: {error}</p>}
         {loading && <Loader />}
-        {isImages && <ImageGallery showModal={showModal} item={hits} />}
+        {isImages && <ImageGallery showModal={showModal} items={hits} />}
         {isTotal && (
           <div className={styles.loadMoreWrapper}>
             <Button type="button" onClick={loadMore}>
@@ -84,9 +91,10 @@ class ImageSearch extends Component {
             </Button>
           </div>
         )}
+
         {modalOpen && (
           <Modal close={closeModal}>
-            <img src={postDetails.webFormatURL} alt={postDetails.tags} />
+            <img src={postDetails.webformatURL} alt={postDetails.tags} />
           </Modal>
         )}
       </>
