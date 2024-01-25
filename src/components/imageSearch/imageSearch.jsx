@@ -5,6 +5,7 @@ import ImageGallery from './imageGallery/imageGallery';
 import Modal from '../modal/modal';
 import Loader from '../loader/loader';
 import Button from 'components/buttons/button';
+import styles from './imageSearch.module.css';
 
 class ImageSearch extends Component {
   state = {
@@ -36,7 +37,7 @@ class ImageSearch extends Component {
       }));
       TouchList.setState({ error: null });
     } catch (error) {
-      this.setState.error({ error: error.message });
+      this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
     }
@@ -73,11 +74,11 @@ class ImageSearch extends Component {
     return (
       <>
         <Searchbar onSubmit={handleSearch} />
-        {error && <p>ERROR: {error}</p>}
+        {error && <p className={styles.error}>ERROR: {error}</p>}
         {loading && <Loader />}
         {isImages && <ImageGallery showModal={showModal} item={hits} />}
         {isTotal && (
-          <div>
+          <div className={styles.loadMoreWrapper}>
             <Button type="button" onClick={loadMore}>
               {loading ? <Loader backgroundColor={'#333'} /> : 'Load more'}
             </Button>

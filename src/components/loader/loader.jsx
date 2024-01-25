@@ -1,8 +1,9 @@
 import { Audio } from 'react-loader-spinner';
+import styles from './loader.modal.css';
 
 const Loader = () => {
   return (
-    <div>
+    <div className={styles.loaderWrapper}>
       <Audio
         height="80"
         width="80"

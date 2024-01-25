@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import styles from './searchbar.module.css';
 
 class Searchbar extends Component {
   state = {
@@ -17,9 +18,11 @@ class Searchbar extends Component {
     const { handleChange, handleSubmit } = this;
     const { search } = this.state;
     return (
-      <header>
-        <form onSubmit={handleSubmit}>
-          <button type="submit">Search</button>
+      <header className={styles.searchbar}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <button type="submit" className={styles.button}>
+            🔎
+          </button>
           <input
             value={search}
             onChange={handleChange}
@@ -28,6 +31,7 @@ class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
+            className={styles.input}
           />
         </form>
       </header>
